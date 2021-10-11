@@ -522,6 +522,36 @@ def modelTesterKFold(data, columns, target):
 
   return scores
 
+"""# Testes
+
+Datasets taken from:
+- https://jamesmccaffrey.wordpress.com/2018/03/14/datasets-for-binary-classification/
+- https://machinelearningmastery.com/standard-machine-learning-datasets/
+- https://github.com/jbrownlee/Datasets
+"""
+
+def processDataSet(key, data, lock):
+  if type(data) != str:
+    df = pd.DataFrame(data = np.c_[data['data'], data['target']], 
+                      columns = np.append(data['feature_names'], 'target'))
+  else:
+    df = handleDataset(key, data)
+  
+  columns_index = []
+  target_index = 0
+
+  for index in df:
+    if index != 'target':
+      columns_index.append(df.columns.get_loc(index))
+    else:
+      target_index = df.columns.get_loc(index)
+
+  lock.acquire()
+  scores[key] = modelTesterKFold(df, columns_index, target_index)
+  lock.release()
+
+THREAD_PERC = 100
+NUMBER_OF_THREADS = psutil.cpu_count() * (THREAD_PERC / 100)
 
 arguments = sys.argv
 
@@ -553,25 +583,16 @@ if "oil_spill" in arguments:
     datasets['oil_spill'] = 'https://raw.githubusercontent.com/jbrownlee/Datasets/master/oil-spill.csv'
 
 scores = {}
+threads = []
+lock = threading.Lock()
 
 for key, data in datasets.items():
+  t = threading.Thread(None, processDataSet, None, [key, data, lock])
+  threads.append(t)
+  t.start()
 
-  if type(data) != str:
-    df = pd.DataFrame(data = np.c_[data['data'], data['target']], 
-                      columns = np.append(data['feature_names'], 'target'))
-  else:
-    df = handleDataset(key, data)
-  
-  columns_index = []
-  target_index = 0
-
-  for index in df:
-    if index != 'target':
-      columns_index.append(df.columns.get_loc(index))
-    else:
-      target_index = df.columns.get_loc(index)
-
-  scores[key] = modelTesterKFold(df, columns_index, target_index)
+for t in threads:
+  t.join()
 
 table = PrettyTable(['', 'accuracy', 'f1', 'recall', 'precision'])
 
