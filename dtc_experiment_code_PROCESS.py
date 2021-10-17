@@ -381,7 +381,8 @@ Datasets taken from:
 THREAD_PERC = 100
 NUMBER_OF_THREADS = psutil.cpu_count() * (THREAD_PERC / 100)
 
-arguments = sys.argv[1].split(" ")
+#arguments = sys.argv[1].split(" ")
+arguments = ["iris","wine"]
 
 print(arguments)
 
@@ -526,7 +527,8 @@ def modelTesterKFold(data, columns, target):
 THREAD_PERC = 100
 NUMBER_OF_THREADS = psutil.cpu_count() * (THREAD_PERC / 100)
 
-arguments = sys.argv[1].split(" ")
+#arguments = sys.argv[1].split(" ")
+arguments = ["iris","wine"]
 
 print(arguments)
 
