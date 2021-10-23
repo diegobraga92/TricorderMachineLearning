@@ -127,7 +127,7 @@ def handleDataset(key, file):
     return df
 
   elif key == 'pima_indians_diabetes':
-    column_headers = ['n_pregnant', 'glucose', 'insulin',
+    column_headers = ['n_pregnant', 'glucose', 'blood_pressure', 'triceps_skinfold', 'insulin',
                   'body_mass', 'diabetes', 'age', 'target']
     pima_indians_diabetes = pd.read_csv(file, header=None, names=column_headers)
     df = pd.DataFrame(data = pima_indians_diabetes, columns = column_headers)
@@ -154,14 +154,14 @@ def handleDataset(key, file):
     return df
   
   elif key == 'phoneme':
-    column_headers = ['V1', 'V2', 'V5', 'target']
+    column_headers = ['V1', 'V2', 'V3', 'V4', 'V5', 'target']
     phoneme = pd.read_csv(file, header=None, names=column_headers)
     df = pd.DataFrame(data = phoneme, columns = column_headers)
     df = df.astype('float64')
     return df
 
   elif key == 'mammography':
-    column_headers = ['V1', 'V2', 'V3', 'V6', 'target']
+    column_headers = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'target']
     mammography = pd.read_csv(file, header=None, names=column_headers)
     df = pd.DataFrame(data = mammography, columns = column_headers)
     df.replace({'target': {"'-1'": 0, "'1'": 1}}, inplace=True)

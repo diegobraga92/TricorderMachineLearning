@@ -36,7 +36,7 @@ def create_output_dir(workingdir):
 # EXPERIMENT CONFIGURATION #
 interval = 0.1
 samples = 60
-executionsTrain = 30
+executionsTrain = 50
 executionsTest = 30
 input_type = 'Decision_Tree'
 
@@ -64,6 +64,8 @@ configs = {
 	"LARGE":		"breast_cancer phoneme",
 	"LARGEST":		"oil_spill mammography"
 }
+
+print(exefiles)
 
 for sut_server in exefiles:
 	sut_server = sut_server.replace('\\','/')
