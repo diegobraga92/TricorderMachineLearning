@@ -194,6 +194,9 @@ def createDecisionTree(X, y):
   estimator = tree.DecisionTreeClassifier()
   estimator.fit(X = X, y = y)
 
+  estimator = tree.DecisionTreeClassifier()
+  estimator.fit(X = X, y = y)
+
   # Armazenando as caracteristicas do modelo
   n_nodes = estimator.tree_.node_count
   children_left = estimator.tree_.children_left
@@ -329,6 +332,17 @@ def modelTester(data, train_index, test_index, columns, target):
   clf.fit(X_test, y_test)
 
   y_pred = clf.predict(X_test) 
+  clf.fit(X_test, y_test)
+
+  y_pred = clf.predict(X_test) 
+
+  scores['accuracy'] = accuracy_score(y_test, y_pred)
+  scores['f1'] = f1_score(y_test, y_pred, average='weighted')
+  scores['recall'] = recall_score(y_test, y_pred, average='weighted')
+  scores['precision'] = precision_score(y_test, y_pred, average='weighted')
+  clf.fit(X_train, y_train)
+
+  y_pred = clf.predict(X_test)
   
   scores['accuracy'] = accuracy_score(y_test, y_pred)
   scores['f1'] = f1_score(y_test, y_pred, average='weighted')
@@ -360,6 +374,17 @@ def modelTesterLimit(data, columns, target, df_limit):
   X_test, y_test = df_limit.iloc[:, columns], df_limit.iloc[:, target]
 
   clf.fit(X_test, y_test)
+
+  y_pred = clf.predict(X_test) 
+  clf.fit(X_test, y_test)
+
+  y_pred = clf.predict(X_test) 
+
+  scores['accuracy'] = accuracy_score(y_test, y_pred)
+  scores['f1'] = f1_score(y_test, y_pred, average='weighted')
+  scores['recall'] = recall_score(y_test, y_pred, average='weighted')
+  scores['precision'] = precision_score(y_test, y_pred, average='weighted')
+  clf.fit(X_train, y_train)
 
   y_pred = clf.predict(X_test) 
     
@@ -513,6 +538,16 @@ def modelTesterKFold(data, columns, target):
     clf.fit(X_test, y_test)
 
     y_pred = clf.predict(X_test) 
+    
+    y_test = np.array(y_test)
+    
+    scores['accuracy'].append(accuracy_score(y_test, y_pred))
+    scores['f1'].append(f1_score(y_test, y_pred, average='weighted'))
+    scores['recall'].append(recall_score(y_test, y_pred, average='weighted'))
+    scores['precision'].append(precision_score(y_test, y_pred, average='weighted'))
+    clf.fit(X = X_train, y = y_train)
+
+    y_pred = clf.predict(X_test)
 
     y_test = np.array(y_test)
     

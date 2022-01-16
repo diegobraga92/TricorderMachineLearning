@@ -44,6 +44,9 @@ from sklearn.metrics import precision_score
 from sklearn.model_selection import cross_val_score
 
 """# Funções utilitárias"""
+df_list = []
+columns_index = []
+df = pd.DataFrame()
 
 def my_ceil(n):
   if n == 0:
@@ -415,17 +418,17 @@ if "oil_spill" in arguments:
 scores = {}
 scores_limit = {}
 results = {}
+data = []
 
 for key, data in datasets.items():
-  scores = {}
-  scores_limit = {}
-  results = {}
   if type(data) != str:
     df = pd.DataFrame(data = np.c_[data['data'], data['target']], 
                       columns = np.append(data['feature_names'], 'target'))
   else:
     df = handleDataset(key, data)
   
+  df_list.append(df)
+
   X = df.loc[:, df.columns != 'target']
   y = df.iloc[:, df.columns == 'target']
 
@@ -563,15 +566,16 @@ if "oil_spill" in arguments:
 scores = {}
 threads = []
 lock = threading.Lock()
+data = []
 
 def processDataSetKFold(key, data, lock):
-  scores = {}
   if type(data) != str:
     df = pd.DataFrame(data = np.c_[data['data'], data['target']], 
                       columns = np.append(data['feature_names'], 'target'))
   else:
     df = handleDataset(key, data)
   
+  df_list.append(df)
   columns_index = []
   target_index = 0
 

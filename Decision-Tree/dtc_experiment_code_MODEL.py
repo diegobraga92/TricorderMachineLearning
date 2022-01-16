@@ -322,7 +322,7 @@ def modelTester(data, train_index, test_index, columns, target):
   scores = {}  
 
   # ORIG: clf =  KNeighborsClassifier(n_neighbors=3)
-  clf =  KNeighborsClassifier(n_neighbors=5)
+  clf =  KNeighborsClassifier(n_neighbors=12)
 
   X_train, y_train = data.iloc[train_index, columns], data.iloc[train_index, target]
   X_test, y_test = data.iloc[test_index, columns], data.iloc[test_index, target]
@@ -356,7 +356,7 @@ def modelTesterLimit(data, columns, target, df_limit):
   scores = {}
 
   #ORIG clf =  KNeighborsClassifier(n_neighbors=3)
-  clf =  KNeighborsClassifier(n_neighbors=5)
+  clf =  KNeighborsClassifier(n_neighbors=12)
 
   X_train, y_train = data.iloc[:, columns], data.iloc[:, target]
   X_test, y_test = df_limit.iloc[:, columns], df_limit.iloc[:, target]
@@ -496,7 +496,7 @@ def modelTesterKFold(data, columns, target):
   """
 
   #ORIG: clf = KNeighborsClassifier(n_neighbors=3)
-  clf = KNeighborsClassifier(n_neighbors=5)
+  clf = KNeighborsClassifier(n_neighbors=12)
   
   scores = {}
   scores['accuracy'] = []

@@ -100,7 +100,7 @@ def handleDataset(key, file):
   if key == 'heart_disease':
     column_headers = ['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 
                       'exang', 'oldpeak', 'slope', 'ca', 'thal', 'target']
-    heart_disease = pd.read_csv(file, header=None, names=column_headers)
+    heart_disease = pd.read_csv(file, header=None, names=column_headers, skiprows=100)
     df = pd.DataFrame(data = heart_disease, columns = column_headers)
     df.replace({"target": {2: 1, 3: 1, 4:1}}, inplace=True)
     df = df[df.ca != '?']
@@ -112,7 +112,7 @@ def handleDataset(key, file):
     
   elif key == 'banknote':
     column_headers = ['variance', 'curtosis', 'entropy', 'target']
-    banknote  = pd.read_csv(file, header=None, names=column_headers)
+    banknote  = pd.read_csv(file, header=None, names=column_headers, skiprows=400)
     df = pd.DataFrame(data = banknote, columns = column_headers)
     df = df.astype('float64')
     
@@ -120,7 +120,7 @@ def handleDataset(key, file):
 
   elif key == 'haberman_survival':
     column_headers = ['age', 'year', 'target']
-    haberman_survival  = pd.read_csv(file, header=None, names=column_headers)
+    haberman_survival  = pd.read_csv(file, header=None, names=column_headers, skiprows=100)
     df = pd.DataFrame(data = haberman_survival, columns = column_headers)
     df = df.astype('float64')
     
@@ -129,14 +129,14 @@ def handleDataset(key, file):
   elif key == 'pima_indians_diabetes':
     column_headers = ['n_pregnant', 'glucose', 'blood_pressure', 'triceps_skinfold', 'insulin',
                   'body_mass', 'diabetes', 'age', 'target']
-    pima_indians_diabetes = pd.read_csv(file, header=None, names=column_headers)
+    pima_indians_diabetes = pd.read_csv(file, header=None, names=column_headers, skiprows=250)
     df = pd.DataFrame(data = pima_indians_diabetes, columns = column_headers)
     df = df.astype('float64')
 
     return df
 
   elif key == 'sonar':
-    sonar = pd.read_csv(file, header=None)
+    sonar = pd.read_csv(file, header=None, skiprows=60)
     df = pd.DataFrame(data = sonar, columns = sonar.columns)
     df.replace({60: {'R': 0, 'M': 1}}, inplace=True)
     df.rename(columns={60: 'target'}, inplace=True)
@@ -145,7 +145,7 @@ def handleDataset(key, file):
     return df
 
   elif key == 'ionosphere':
-    abalone = pd.read_csv(file, header=None)
+    abalone = pd.read_csv(file, header=None, skiprows=120)
     df = pd.DataFrame(data = abalone, columns = abalone.columns)
     df.replace({34: {'g': 0, 'b': 1}}, inplace=True)
     df.rename(columns={34: 'target'}, inplace=True)
@@ -155,21 +155,21 @@ def handleDataset(key, file):
   
   elif key == 'phoneme':
     column_headers = ['V1', 'V2', 'V3', 'V4', 'V5', 'target']
-    phoneme = pd.read_csv(file, header=None, names=column_headers)
+    phoneme = pd.read_csv(file, header=None, names=column_headers, skiprows=1800)
     df = pd.DataFrame(data = phoneme, columns = column_headers)
     df = df.astype('float64')
     return df
 
   elif key == 'mammography':
     column_headers = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'target']
-    mammography = pd.read_csv(file, header=None, names=column_headers)
+    mammography = pd.read_csv(file, header=None, names=column_headers, skiprows=3500)
     df = pd.DataFrame(data = mammography, columns = column_headers)
     df.replace({'target': {"'-1'": 0, "'1'": 1}}, inplace=True)
     df = df.astype('float64')
     return df
 
   elif key == 'oil_spill':
-    oil_spill = pd.read_csv(file, header=None)
+    oil_spill = pd.read_csv(file, header=None, skiprows=300)
     df = pd.DataFrame(data = oil_spill, columns = oil_spill.columns)
     df.rename(columns={49: 'target'}, inplace=True)
     df = df.astype('float64')
